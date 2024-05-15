@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Advising Hold</a>
+  </nav>
+    <p> You have an advising hold on your account. Please contact your advisor to remove this hold.</p>
+    
+
+
+  <table class="table table-striped">
+      <tr>
+          <th>Univ ID</th>
+          <th>Last Name</th>
+          <th>First Name</th>
+      </tr>
+
+      {% for i in rows: %}
+      <tr>
+          <th>{{i['s_id']}}</th>
+          <th>{{i['lname']}}</th>
+          <th>{{i['fname']}}</th>
+      </tr>
+      {% endfor %}
+
+  </table>
+
+  <br>
+
+  <b>Courses to be added:</b>
+  <table class="table table-striped">
+    <tr>
+      <th>Number</th>
+      <th>Course ID</th>
+    </tr>
+    <form action="/advising_hold" method="POST">
+    {% for i in range(1, 13) %}
+
+    <tr>
+      <td>{{i}}</td>
+      <td> 
+        <select class="form-select form-select-lg mb-3" name="sid{{ i }}" id="">
+        <option value="">Choose class</option>
+        {% for course in courses %}
+        <option value="{{course['cid']}}">{{course['dept']}} {{course['class_number']}} - {{course['title']}}</option>
+        {% endfor %}
+      </select>
+    </td>
+    </tr>
+    {% endfor %}
+    
+
+  </table>
+    <input class="btn btn-primary" type="submit" name="submit" value = "submit" formmethod = "POST">
+  </form>
+  
+  <a href="/Student_Advising" class="btn btn-primary">Go back to previous page</a>
+ 
+</div>
+{% endblock %}

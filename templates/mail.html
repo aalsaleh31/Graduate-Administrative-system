@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">My mail</a>
+    </nav>
+    
+    <h2>{{error}}</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>From</th>
+            <th>message</th>
+            <th>Date</th>
+        </tr>
+        {% for i in messages %}
+        <tr>
+            <td>{{i.fname}} {{i.lname}}</td>
+            <td>{{i.message}}</td>
+            <td>{{i.DATE}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h1>SEND MAIL</h1>
+    <form class="needs-validation" novalidate action="/mail" method="POST">
+        <div class="form-group">
+            <label for="message">receiver_id</label>
+            <input required class="form-control" type="text" name="reciever">
+        </div>
+        <div class="form-group">
+            <label for="message">Message</label>
+            <input required class="form-control" type="text" name="message">
+        </div>
+        <input class="btn btn-primary btn-sm" type="submit" value="send"> 
+        <a class="btn btn-primary btn-sm" href="/lookup">Look up ids</a>
+
+    </form>
+
+
+    <h1>Sent Mail</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>To</th>
+            <th>message</th>
+            <th>Date</th>
+        </tr>
+        {% for i in sent %}
+        <tr>
+            <td>{{i.fname}} {{i.lname}}</td>
+            <td>{{i.message}}</td>
+            <td>{{i.DATE}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

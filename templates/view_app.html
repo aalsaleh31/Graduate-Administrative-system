@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+
+
+        <h1> Your applications </h1>
+        <table class="table table-striped">
+            <tr>
+                <th>Semester</th>
+                <th>Year</th>
+                <th>Status</th>
+                <th>Edit</th>
+                <th>Submit</th>
+            </tr>
+    
+            {% for items in content %}
+            <tr>
+                <td>{{items["semester"]}}</td>
+                <td>{{items["s_year"]}}</td>
+                <td>{{items["status"]}}</td>
+                <td>
+                    {% if items["status"] == "incomplete" %}
+                    <form action="/edit_app/{{items['semester']}}/{{items['s_year']}}"> <input type="submit" class="btn btn-primary" value="Edit App"/> </form>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if items["status"] == "incomplete" %}
+                    <form action="/submit_app/{{items['semester']}}/{{items['s_year']}}" method="POST"> <input type="submit" class="btn btn-primary" value="Submit"/> </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {% for items in content %}
+            {% if items['status'] == 'accept' or items['status'] == 'accept with aid' %}
+            <legend>ENROLL TODAY!</legend>
+            <table class="table table-striped">
+                <tr>
+                    <th>Degree</th>
+                    <th>Semester</th>
+                    <th>Year</th>
+                    <th>Status</th>
+                    <th>Accept</th>
+                </tr>
+                <tr>
+                    <td>{{items["degree_type"]}}</td>
+                    <td>{{items["semester"]}}</td>
+                    <td>{{items["s_year"]}}</td>
+                    <td>{{items["status"]}}</td>
+                    <td> <form action="/enroll/{{items['degree_type']}}" method="post"><input type="submit" class="btn btn-primary"></form> </td>
+                </tr>
+            </table>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

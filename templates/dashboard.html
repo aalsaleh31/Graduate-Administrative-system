@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row"> 
+        {% if session.user_type == 'applicant' %}
+        <!-- Create application button -->
+        <div class="col">
+            <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                <img src="/static/addapp.png" class="card-img-top" alt="View Students" />
+                <div class="card-body">
+                    <h5 class="card-title"> Create Application </h5>
+                    <p class="card-text"> Apply today! </p>
+                </div>
+                <div class="card-footer">
+                    <a href="/create_app" class="btn btn-primary btn-lg"> Apply </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- View application button -->
+        <div class="col">
+            <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                <img src="/static/viewapp.png" class="card-img-top" alt="View Students" />
+                <div class="card-body">
+                    <h5 class="card-title"> View Applications </h5>
+                    <p class="card-text"> View status of submitted applications and edit incomplete applications </p>
+                </div>
+                <div class="card-footer">
+                    <a href="/view_app" class="btn btn-primary btn-lg"> View </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add rec button -->
+        <div class="col">
+            <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                <img src="/static/rec.png" class="card-img-top" alt="View Students" />
+                <div class="card-body">
+                    <h5 class="card-title"> Add recommendations </h5>
+                    <p class="card-text"> Add or rewrite letters of recommendation </p>
+                </div>
+                <div class="card-footer">
+                    <a href="/add_rec" class="btn btn-primary btn-lg"> Add </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+
+        {% if session.user_type == 'reviewer' or session.user_type == 'CAC' %}
+        <!-- Submit reviews button -->
+        <div class="col">
+            <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                <img src="/static/review.png" class="card-img-top" alt="View Students" />
+                <div class="card-body">
+                    <h5 class="card-title"> Review applications </h5>
+                    <p class="card-text"> Review incomming applications </p>
+                </div>
+                <div class="card-footer">
+                    <a href="/review_app" class="btn btn-primary btn-lg"> View </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if session.user_type == 'student_ms' or session.user_type == 'student_phd' %}
+            <div class="col">
+                <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                    <img src="/static/checkreq.png" class="card-img-top" alt="View Students" />
+                    <div class="card-body">
+                        <h5 class="card-title">ADVISING </h5>
+                        <p class="card-text">Apply to graduate, submit form1 and other</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/Student_Advising" class="btn btn-primary btn-lg">submit</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col">
+                <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                    <img src="/static/register.png" class="card-img-top" alt="View Students" />
+                    <div class="card-body">
+                        <h5 class="card-title">Register </h5>
+                        <p class="card-text">Register for classes and other</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/student_regestration" class="btn btn-primary btn-lg">submit</a>
+                    </div>
+                </div>
+            </div>
+            
+        {% endif %}
+
+
+        {% if session.user_type == 'admin' %}
+        <div class="col">
+            <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                <img src="/static/staff.png" class="card-img-top" alt="View Students" />
+                <div class="card-body">
+                    <h5 class="card-title">View users </h5>
+                    <p class="card-text">Change user information, create new users.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/sysadmin_regestration" class="btn btn-primary btn-lg">submit</a>
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
+        {% if session.user_type == 'GS' %}
+        <!-- Final application decision -->
+        <div class="col">
+            <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                <img src="/static/review.png" class="card-img-top" alt="View Students" />
+                <div class="card-body">
+                    <h5 class="card-title">Review applications</h5>
+                    <p class="card-text">Evaluate incoming applications</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/review_app" class="btn btn-primary btn-lg">submit</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if session.user_type == 'GS' or session.user_type == 'admin'%}
+        <div class="col">
+            <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                <img src="/static/approve.png" class="card-img-top" alt="View Students" />
+                <div class="card-body">
+                    <h5 class="card-title">view current students:</h5>
+                    <p class="card-text">View current students, approve for graduation, and change advisors.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/GS_Approve_Students" class="btn btn-primary btn-lg">submit</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                <img src="/static/viewstudents.png" class="card-img-top" alt="View Students" />
+                <div class="card-body">
+                    <h5 class="card-title">View all students:</h5>
+                    <p class="card-text">View all students.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/GS_queries" class="btn btn-primary btn-lg">submit</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if session.user_type == 'faculty' %}
+        <div class="col">
+            <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                <img src="/static/register.png" class="card-img-top" alt="View Students" />
+                <div class="card-body">
+                    <h5 class="card-title">view Registration:</h5>
+                    <p class="card-text">view class registration.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/faculty_regestration" class="btn btn-primary btn-lg">submit</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                <img src="/static/viewstudents.png" class="card-img-top" alt="View Students" />
+                <div class="card-body">
+                    <h5 class="card-title">View my students:</h5>
+                    <p class="card-text">view my students transcript, form1, and approve thesis</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/Faculty_Approve_Thesis" class="btn btn-primary btn-lg">submit</a>
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
+        {% if session.user_type == 'alumni' or  session.user_type == 'student_ms' or session.user_type == 'student_phd'%}
+        <!--this button has nothing-->
+
+        <div class="col">
+            <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                <img src="/static/transcripts.png" class="card-img-top" alt="View Students" />
+                <div class="card-body">
+                    <h5 class="card-title">View Transcript</h5>
+                    <p class="card-text">view your transcript</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/Transcript{{session.id}}" class="btn btn-primary btn-lg">submit</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+            <div class="col">
+                <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                    <img src="/static/edit.png" class="card-img-top" alt="View Students" />
+                    <div class="card-body">
+                        <h5 class="card-title">Edit info</h5>
+                        <p class="card-text">Edit personal information such as: email, address, phone number, and other.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/Editinfo" class="btn btn-primary btn-lg">Edit</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                    <img src="/static/add.png" class="card-img-top" alt="View Students" />
+                    <div class="card-body">
+                        <h5 class="card-title">Message</h5>
+                        <p class="card-text">Message other people who are {{session.user_type}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/messages" class="btn btn-primary btn-lg">Message</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+{% endblock %}

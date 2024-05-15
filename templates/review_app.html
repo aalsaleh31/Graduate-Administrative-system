@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+
+        <!-- Check transcripts -->
+        {% if session.user_type == 'GS' %}
+            <legend> Check transcripts </legend>
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Application type</th>
+                    <th>Semester</th>
+                    <th>Year</th>
+                    <th>Recieved?</th>
+                </tr>
+                {% for item in apps %}
+                    {% if item['status'] == 'incomplete' and item['recieved_transcript'] == 0 %}
+                        <tr>
+                            <td>{{item['uid']}}</td>
+                            <td>{{item['degree_type']}}</td>
+                            <td>{{item['semester']}}</td>
+                            <td>{{item['s_year']}}</td>
+                            <td>
+                                <form action="/recieved/{{item['uid']}}/{{item['semester']}}/{{item['s_year']}}" method="post"><input type="submit" value="Recieved"></form>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        {% endif %}
+
+        <!-- Create reviews -->
+        {% if session.user_type == 'CAC' or session.user_type == 'reviewer' %}
+            <legend> Write reviews </legend>
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Application type</th>
+                    <th>Semester</th>
+                    <th>Year</th>
+                    <th>Review</th>
+                </tr>
+                {% for item in not_my %}
+                    {% if item['status'] == 'complete' or item['status'] == 'under review' %}
+                        <tr>
+                            <td>{{item['uid']}}</td>
+                            <td>{{item['degree_type']}}</td>
+                            <td>{{item['semester']}}</td>
+                            <td>{{item['s_year']}}</td>
+                            <td>
+                                <a href="/review/{{item['uid']}}/{{item['semester']}}/{{item['s_year']}}" class="btn btn-primary"> Review </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        {% endif %}
+        
+        <!-- Make decision -->
+        {% if session.user_type == 'CAC' or session.user_type == 'GS' %}
+            <legend> Make final decisions </legend>
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Application type</th>
+                    <th>Semester</th>
+                    <th>Year</th>
+                    <th>Review</th>
+                </tr>
+                {% for item in apps %}
+                    {% if item['status'] == 'complete' or item['status'] == 'under review' %}
+                        <tr>
+                            <td>{{item['uid']}}</td>
+                            <td>{{item['degree_type']}}</td>
+                            <td>{{item['semester']}}</td>
+                            <td>{{item['s_year']}}</td>
+                            <td>
+                                <a href="/final_review/{{item['uid']}}/{{item['semester']}}/{{item['s_year']}}" class="btn btn-primary"> Final review </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        {% endif %}
+
+    </div>
+{% endblock %}

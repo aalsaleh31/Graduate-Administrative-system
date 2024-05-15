@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+
+        <legend>Application</legend>
+        <b> {{app['degree_type']}} application for {{app['semester']}}, {{app['s_year']}} </b> <br>
+        Prior {{app['prior_bac_deg_name']}} degree in {{app['prior_bac_deg_major']}}, at {{app['prior_bac_deg_university']}} with {{app['prior_bac_deg_gpa']}}, in {{app['prior_bac_deg_year']}}. <br>
+        {% if app['prior_ms_deg_gpa'] != None %}
+            Prior {{app['prior_ms_deg_name']}} degree in {{app['prior_ms_deg_major']}}, at {{app['prior_ms_deg_university']}} with {{app['prior_ms_deg_gpa']}}, in {{app['prior_ms_deg_year']}}. <br>
+        {% endif %}
+        {% if app['GRE_year'] != None %}
+            Took GRE in {{app['GRE_year']}}, scoring {{app['GRE_verbal']}} in verbal, {{app['GRE_quantitative']}} in quantitative, and {{app['GRE_analytical_writing']}} in writing. <br>
+        {% endif %}
+        {% if app['TOEFL_date'] != None %}
+            Took TOEFL in {{app['TOEFL_date']}}, scoring {{app['TOEFL_score']}}. <br>
+        {% endif %}
+        Interest: {{app['interest']}} <br>
+        Experience: {{app['experience']}} <br><br>
+
+        <legend>Recommendations</legend>
+        {% for item in rec %}
+        Recommender: {{item['recommenderAffil']}} <br>
+        {{item['contents']}} <br><br>
+        {% endfor %}
+
+        <legend>Reviews</legend>
+        {% for item in rev %}
+        Suggestion: {{item['rev_rating']}} <br>
+        {% if item['deficiency_course'] != None %}
+            Deficiency course: {{item['deficiency_course']}} <br>
+        {% endif %}
+        {% if item['reason_reject'] != None %}
+            Reject reason: {{item['reason_reject']}} <br>
+        {% endif %}
+        Comment: {{item['GAS_comment']}} <br><br>
+        {% endfor %}
+
+        <legend>Decision</legend>
+        <form action="/final_review/{{app['uid']}}/{{app['semester']}}/{{app['s_year']}}" method="post">
+            <select name="decision" required>
+                <option value="accept">Accept</option>
+                <option value="accept with aid">Accept with aid</option>
+                <option value="reject">Reject</option>
+            </select>
+            <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+
+    </div>
+
+{% endblock %}

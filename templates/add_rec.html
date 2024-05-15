@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <form action="/add_rec" method="post">
+        {% for i in range(3) %}
+            <legend> Letter {{i+1}} </legend>
+            Name: <input type="text" required name="name{{i}}"><br>
+            Email: <input type="email" required name="email{{i}}"><br>
+            Affiliation: <input type="text" required name="affiliation{{i}}"><br><br>
+            <textarea required name="content{{i}}" rows="3" cols="100"></textarea><br><br>
+        {% endfor %}
+        <input type="submit" class="btn btn-primary">
+        </form>
+    </div>
+
+{% endblock %}

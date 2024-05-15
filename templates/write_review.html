@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+
+        <legend>Application</legend>
+        <b> {{app['degree_type']}} application for {{app['semester']}}, {{app['s_year']}} </b> <br>
+        Prior {{app['prior_bac_deg_name']}} degree in {{app['prior_bac_deg_major']}}, at {{app['prior_bac_deg_university']}} with {{app['prior_bac_deg_gpa']}}, in {{app['prior_bac_deg_year']}}. <br>
+        {% if app['prior_ms_deg_gpa'] != None %}
+            Prior {{app['prior_ms_deg_name']}} degree in {{app['prior_ms_deg_major']}}, at {{app['prior_ms_deg_university']}} with {{app['prior_ms_deg_gpa']}}, in {{app['prior_ms_deg_year']}}. <br>
+        {% endif %}
+        {% if app['GRE_year'] != None %}
+            Took GRE in {{app['GRE_year']}}, scoring {{app['GRE_verbal']}} in verbal, {{app['GRE_quantitative']}} in quantitative, and {{app['GRE_analytical_writing']}} in writing. <br>
+        {% endif %}
+        {% if app['TOEFL_date'] != None %}
+            Took TOEFL in {{app['TOEFL_date']}}, scoring {{app['TOEFL_score']}}. <br>
+        {% endif %}
+        Interest: {{app['interest']}} <br>
+        Experience: {{app['experience']}} <br><br>
+
+        <legend>Recommendations</legend>
+        {% for item in rec %}
+        Recommender: {{item['recommenderAffil']}} <br>
+        {{item['contents']}} <br><br>
+        {% endfor %}
+
+        <legend>Review</legend>
+        <form action="/review/{{app['uid']}}/{{app['semester']}}/{{app['s_year']}}" method="post">
+            Suggestion: <select name="rating" required>
+                <option value="4">Admit with aid</option>
+                <option value="3">Admit</option>
+                <option value="2">Borderline admit</option>
+                <option value="1">Reject</option>
+            </select><br>
+            Deficiency course: <input type="text" name="deficiency" size="30"><br>
+            Reject Reason: <select name="reject_reason">
+                <option value="">None</option>
+                <option value="A">Incomplete record</option>
+                <option value="B">Does not meet minimum requirements</option>
+                <option value="C">Problem with letters</option>
+                <option value="D">Not competative</option>
+                <option value="E">Other reason</option>
+            </select><br>
+            Comment: <input type="text" name="comment" size="37" required><br><br>
+            <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+
+    </div>
+
+{% endblock %}

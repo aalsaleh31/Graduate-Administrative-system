@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">student id: {{s_id}}</a>
+    </nav>
+    <table class="table table-striped">
+        <tr>
+
+            <th>course ID</th>
+            <th>course dept and number</th>
+            <th>course name</th>
+        </tr>
+
+        <tr>
+            {% if r == 0 %}
+                <td>Form 1 is empty</td>
+            {% endif %}
+        </tr>
+        {% for i in rows %}
+        <tr>
+            
+            <td>{{i["cid"]}}</td>
+            <td>{{i["dept"]}} {{i["class_number"]}}</td>
+            <td>{{i["title"]}}</td>
+            
+        </tr>
+        {% endfor %}
+    </table>
+    <a class="btn btn-primary btn-sm" href="/Faculty_Approve_Thesis">Go back to viewing all students</a>
+</div>
+{% endblock %}

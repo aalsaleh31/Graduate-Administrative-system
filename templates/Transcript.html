@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <body>
+        <div class="container" id="content">
+        <h3>The transcript of {{ session['student_name']['fname'] }} {{ session['student_name']['lname'] }}</h3>
+        <h3>Univsersity ID: {{ student_uid }} </h3>
+        <h3>GPA: {{ session['GPA'] }} </h3>
+        <h3>Total credits: {{ session['Total_credit'] }} </h3>
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    <b>Class Number</b>
+                </th>
+                <th>
+                    <b>Department</b>
+                </th>
+                <th>
+                    <b>Title</b>
+                </th>
+                <th>
+                    <b>Professor</b>
+                </th>
+                {% if session["user_type"] != "GS" %}
+                    {% if session["user_type"] != "admin" %}
+                    <th>
+                        <b>Class Page Link</b>
+                    </th>
+                    {% endif %}
+                {% endif %}
+                <th>
+                    <b>Semester Taken</b>
+                </th>
+                <th>
+                    <b>Grade</b>
+                </th>
+            </tr>
+            {% for class in session['classes_taken'] %}
+            <tr>
+                <td >
+                    <b>{{ class['class_number'] }}</b>
+                </td>
+                <td >
+                    <b>{{ class['dept'] }}</b>
+                </td>
+                <td >
+                    <b>{{ class['title'] }}</b>
+                </td>
+                <td >
+                    <b>{{ class['fname'] }} {{ class['lname'] }}</b>
+                </td>
+                {% if session["user_type"] != "GS" %}
+                <td>
+                    <a href={{ url_for('Class_Page', class_ID = class['section_id']) }}>Class Page</a>
+                </td>
+                {% endif %}
+                <td>
+                    <b>{{ class['semester'] }} {{ class['year'] }}</b>
+                </td>
+                {% if session["user_type"] != "GS" %}
+                <td>
+                    <b>{{ class['grade'] }}</b>
+                </td>
+                {% endif %}
+                {% if session["user_type"] == "GS" or session['user_type'] == "admin" %}
+                <td>
+                    <form action="Transcript{{ student_uid }}" method="POST">
+                        <input type="hidden" value="{{class['section_id']}}" name="sec_id">
+                        <Select name="new_grade">
+                            {% for i in grades %}
+                                {% if i == class['grade'] %}
+                                    <option value="{{ i }}" selected>{{ i }}</option>
+                                {% else %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endif %}
+                                
+                            {% endfor %}
+                            
+                        </Select>   
+                        <input type="submit" value="Edit changes">
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        <div class="container">
+            <button class="btn btn-primary btn-sm" id="submit">Download as pdf</button>
+
+        </div>
+
+    </body>
+    
+    <script>
+        //below is the form validation
+        'use strict';
+    
+    var docs = new jsPDF();
+    
+    $(document).ready(function() {
+        $('#submit').click(function () {
+            var content = $('#content')[0];
+            html2canvas(content).then(function(canvas) {
+                var imgData = canvas.toDataURL('image/png');
+                docs.addImage(imgData, 'PNG', 15, 15, 180, 0);
+                docs.save('Transcript.pdf');
+            });
+        });
+    });
+    
+      </script>
+    
+{% endblock %}

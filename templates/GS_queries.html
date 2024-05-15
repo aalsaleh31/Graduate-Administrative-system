@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h1>GS Queries</h1>
+    <form action="/GS_queries" method="POST">
+        <div class="form-group">
+            <label for="">Search by id: </label>
+            <input class="form-control" type="text" name="s_id">
+        </div>
+
+        <div class="form-group">
+            <label for="">Search by graduation year </label>
+            <input class="form-control" type="text" name="graduation_year">
+        </div>
+
+        <div class="form-group">
+            <label for="">Search by first name: </label>
+            <input class="form-control" type="text" name="f_name">
+        </div>
+
+        <div class="form-group">
+            <label for="">Search by last name: </label>
+            <input class="form-control" type="text" name="l_name">
+        </div>
+        <input class="btn btn-primary btn-sm" type="submit" value="search">
+    </form>
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>type</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>email</th>
+            <th>Graduation date</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td>{{row["uid"]}}</td>
+            <td>{{row["user_type"]}}</td>
+            <td>{{row["fname"]}}</td>
+            <td>{{row["lname"]}}</td>
+            <td>{{row['email']}}</td>
+            <td>{{row['graduation_year']}}</td>
+        </tr>
+        {% endfor %}
+        
+        
+    </table>
+</div>
+{% endblock %}

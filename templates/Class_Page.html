@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <body>
+        <div class="container">
+            <div class = "main">
+            <h3> Time of Class: {{ session['different_periods_2'][session['course']['timeslot']] }} </h1>
+            <h3> Day of Class: {{ session['course']['day'] }}</h3>
+            <h3> Semester: {{ session['course']['semester'] }} {{ session['course']['year'] }} </h3> 
+            <h3> Class Name: {{ session['course']['title'] }} </h3> 
+            <h3> Class number: {{ session['course']['class_number'] }}</h3> 
+            <h3> Section ID: {{ class_ID }} </h3> 
+            <h3> Teacher: {{ session['course']['fname'] }} {{ session['course']['lname'] }} </h3> 
+
+            Students: 
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                        <b>First Name</b>
+                    </th>
+                    <th>
+                        <b>Last Name</b>
+                    </th>
+                    <th>
+                        <b>Univsersity_ID</b>
+                    </th>
+                    <th>
+                        <b>Link to Transcript</b>
+                    </th>
+                    <th >
+                        <b>Grade</b>
+                    </th>
+                </tr>
+                {% for student in session['students'] %}
+                <tr>
+                    <td>
+                        <b>{{ student['fname'] }}</b>
+                    </td>
+                    <td>
+                        <b>{{ student['lname'] }}</b>
+                    </td>
+                    <td>
+                        <b>{{ student['uid'] }}</b>
+                    </td>
+                    <td >
+                        {% if student['uid'] == session['id'] or session['user_type'] == 'faculty' or session['user_type'] == 'grad_sec' %}
+                            <a href={{ url_for('Transcript', student_uid = student['uid']) }}>Transcript</a></br>
+                        {% endif %}
+                    </td>
+                    <td >
+                        {% if student['uid'] == session['id'] %}
+                            <b>{{ student['grade'] }}</b>
+                        {% elif session['user_type'] == 'faculty' and student['finalized'] == 1 %} 
+                            <b>{{ student['grade'] }}</b>
+                        {% elif session['user_type'] == 'faculty' and student['finalized'] == 0 %} 
+                        <form method="POST" action="/Class_Page{{ class_ID }}">
+                            <select name="{{ student['uid'] }}">
+                                {% for grade in session['possible_grades'] %}
+                                    {% if grade == student['grade'] %}
+                                        <option value="{{ grade }}" selected>{{ grade }}</option>
+                                    {% else %}
+                                        <option value="{{ grade }}">{{ grade }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <input type="submit" value="Submit">
+                        </form>
+                        {% elif session['user_type'] == 'grad_sec' %}
+                        <form method="POST" action="/Class_Page{{ class_ID }}">
+                            <select name="{{ student['uid'] }}">
+                                {% for grade in session['possible_grades'] %}
+                                    {% if grade == student['grade'] %}
+                                        <option value="{{ grade }}" selected>{{ grade }}</option>
+                                    {% else %}
+                                        <option value="{{ grade }}">{{ grade }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <input type="submit" value="Submit">
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        </div>
+    </body>
+{% endblock %}

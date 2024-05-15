@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="message-list-container" style="height: 400px; overflow: auto;">
+                        <div class="message-list">
+                            {% for i in messages %}
+                            {% if session['id'] == i['uid'] %}
+                            <div class="message-item">
+                                <div class="message-bubble outgoing">
+                                    <p>{{i.message}}</p>
+                                </div>
+                                <div class="message-time text-right">
+                                    <small>{{i.DATE}}</small>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if session['id'] != i['uid'] %}
+                            <div class="message-item">
+                                <div class="message-bubble incoming">
+                                    <p>{{i.message}}</p>
+                                </div>
+                                <div class="message-time">
+                                    <small>{{i.fname}} {{i.lname}} at {{i.DATE}}</small>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <form class="needs-validation" novalidate action="/messages" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="message" required placeholder="Type your message...">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .message-bubble {
+      max-width: 70%;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+  
+    .message-bubble.outgoing {
+      background-color: #007bff;
+      color: #fff;
+      margin-left: auto;
+    }
+  
+    .message-bubble.incoming {
+      background-color: #f0f0f0;
+    }
+  
+    .message-time {
+      font-size: 12px;
+    }
+</style>
+
+<script>
+    // Scroll to the bottom of the message list container
+    var messageListContainer = document.querySelector(".message-list-container");
+    messageListContainer.scrollTop = messageListContainer.scrollHeight;
+</script>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">student id: {{s_id}} future classes</a>
+    </nav>
+    {% if r == 0 %}
+        <h3>there is no advising form to approve</h3>
+        <a class="btn btn-primary btn-sm" href="/Faculty_Approve_Thesis">Go back to viewing all students</a>
+    {% endif %}
+
+    {% if r > 0 %}
+            <h1>Student has not submitted form 1</h1>
+        
+        <table class="table table-striped">
+            <tr>
+
+                <th>course ID</th>
+                <th>course dept and number</th>
+                <th>course name</th>
+            </tr>
+            {% for i in rows %}
+            <tr>
+                
+                <td>{{i["cid"]}}</td>
+                <td>{{i["dept"]}} {{i["class_number"]}}</td>
+                <td>{{i["title"]}}</td>
+                
+            </tr>
+            {% endfor %}
+        </table>
+        <form action="/approve_advising_hold" method="POST">
+            <input type="hidden" name="sx_id" value="{{s_id}}" id="">
+            <select class="form-select" aria-label="Default select example" name="final" id="">
+                <option value="True">Approve</option>
+                <option value="False">Reject</option>
+            </select>
+            <input class="btn btn-primary btn-sm" type="submit" value="submit">
+            <a class="btn btn-primary btn-sm" href="/Faculty_Approve_Thesis">Go back to viewing all students</a>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

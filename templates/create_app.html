@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <form action="/create_app" method="POST">
+            <fieldset>
+                <legend> Application type and date: </legend>
+                <select id="degree_type" name="degree_type" required>
+                    <option value="MS"> Masters </option>
+                    <option value="Phd"> PhD </option>
+                </select>
+                <select id="semester" name="semester" required>
+                    <option value="fall"> Fall </option>
+                    <option value="spring"> Spring </option>
+                    <option value="summer"> Summer </option>
+                </select>
+                <select id="year" name="year" required>
+                    <option value="2023"> 2023 </option>
+                    <option value="2024"> 2024 </option>
+                </select>
+            </fieldset> <br>
+            <input type="submit" class="btn btn-primary" name="submit" value="Next">
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Write thesis below</a>
+    </nav>
+    <h1>{{submitted}}</h1>
+    <form action="/Thesis" method="post">
+        <div class="form-group green-border-focus">
+            <label for="">Input Thesis</label>
+            <textarea class="form-control" name="thesis" id="" placeholder="Write your thesis" rows="20"></textarea>
+            <input class="btn btn-primary" type="submit">
+        </div>
+    </form>
+    <a href="/Student_Advising" class="btn btn-primary">Go back to previous page</a>
+</div>
+{% endblock %}

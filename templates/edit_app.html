@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <form action="/update_app/{{app['semester']}}/{{app['s_year']}}" method="post">
+            <fieldset>
+                <legend>General Information</legend>
+                <b> Applying for: </b> {{app['degree_type']}} <br>
+                <b> Semester: </b> {{app['semester'].capitalize()}} <br>
+                <b> Year: </b> {{app['s_year']}} <br>
+            </fieldset>
+
+            <br>
+
+            <fieldset>
+                <legend>Previous Degree Information</legend>
+                Degree type: <select id="prev_degree_type" name="prev_degree_type" required value="{{app['prev_degree_type']}}"><br>
+                    <option value = "">Choose one</option>
+                    <option value = "Masters">Masters</option>
+                    <option value = "BS/BA">BS/BA</option>  
+                </select> 
+                <br>
+                <div id="masters" style="display: none">
+                    <br>
+                    Master's GPA: <input type="number" min="0.0" max="4.0" step="0.1" name="prior_ms_deg_gpa" value="{{app['prior_ms_deg_gpa']}}"> <br>
+                    Master's Major: <input type="text" name="prior_ms_deg_major" value="{{app['prior_ms_deg_major']}}"> <br>
+                    Master's Graduation year: <input type="number" min="0" max="2023" name="prior_ms_deg_year" value="{{app['prior_ms_deg_year']}}"> <br>
+                    Master's University: <input type="text" name="prior_ms_deg_university" value="{{app['prior_ms_deg_university']}}">
+                </div>
+                <div id="bach" style="display: none">
+                    <br>
+                    Bachelor's GPA: <input type="number" min="0.0" max="4.0" step="0.1" name="prior_bac_deg_gpa" required value="{{app['prior_bac_deg_gpa']}}"> <br>
+                    Bachelor's Major: <input type="text" name="prior_bac_deg_major" required value="{{app['prior_bac_deg_major']}}"> <br>
+                    Bachelor's Graduation year: <input type="number" min="2000" max="2023" name="prior_bac_deg_year" required value="{{app['prior_bac_deg_year']}}"> <br>
+                    Bachelor's University: <input type="text" name="prior_bac_deg_university" required value="{{app['prior_bac_deg_university']}}">
+                </div>
+            </fieldset>
+            
+            <br>
+            
+            <fieldset>
+                <legend>Exams</legend>
+                <b>GRE</b><br>
+                Year taken: <input type="number" min="2000" max="2023" id="GRE_year" name="GRE_year" required value="{{app['GRE_year']}}"><br>
+                Verbal score: <input type="number" min="130" max="170" id="GRE_verbal" name="GRE_verbal" required value="{{app['GRE_verbal']}}"><br>
+                Quantitative score: <input type="number" min="130" max="170" id="GRE_quantitative" name="GRE_quantitative" required value="{{app['GRE_quantitative']}}"><br>
+                Writing score: <input type="number" min="0.0" max="6.0" step="0.5" id="GRE_analytical_writing" name="GRE_analytical_writing" required value="{{app['GRE_analytical_writing']}}"><br><br>
+
+                <b>TOEFL</b><br>
+                Year taken: <input type="number" min="0" max="2023" name="TOEFL_date" value="{{app['TOEFL_date']}}"><br>
+                Combined score: <input type="number" min="0" max="120" id="TOEFL_score" name="TOEFL_score"  value="{{app['TOEFL_score']}}">
+            </fieldset>
+
+            <script>
+            const degreeTypeSelect = document.querySelector('#prev_degree_type');
+
+            const bach = document.querySelector('#bach')
+            const masters = document.querySelector('#masters')
+            degreeTypeSelect.addEventListener('change', () => {
+                if (degreeTypeSelect.value === 'Masters') {
+                bach.style.display ='block';
+                masters.style.display = 'block';
+                } else if (degreeTypeSelect.value === 'BS/BA') {
+                bach.style.display = 'block';
+                masters.style.display = 'none';
+                } else {
+                bach.style.display = 'none';
+                masters.style.display ='none';
+                }
+            });
+            </script>
+
+            <br>
+            
+            <fieldset>
+            <legend>Areas of Interest and Experience</legend>
+            Areas of Interest: <input type="text" name="interest" required value="{{app['interest']}}"><br>
+            Experience: <input type="text" name="experience" required value="{{app['experience']}}">
+            </fieldset>
+            
+            <br>
+            
+            <input type="submit" class="btn btn-primary" name="submit" value="Save">
+        </form>
+    </div>
+{% endblock %}

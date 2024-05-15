@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <form action="/GS_Approve_Students" method = "POST">
+        <div class="form-group">
+            <label for="">Search by id: </label>
+            <input class="form-control" type="text" name="search_id">
+        </div>
+        <input type="submit" value="search">
+    </form>
+
+    <h1>Change advisors </h1>
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>First name</th>
+            <th>middle initial</th>
+            <th>Last Name</th>
+            <th>type</th>
+            <th>Major</th>
+            <th>Current Advisor</th>
+            <th>Thesis</th>
+            <th>Transcript</th>
+        </tr>
+
+        {% for student in students %}
+        <tr>
+            <td>{{ student['s_id'] }}</td>
+            <td>{{ student['fname'] }}</td>
+            <td>{{ student['minit'] }}</td>
+            <td>{{ student['lname'] }}</td>
+            <td>{{ student['user_type'] }}</td>
+            
+            {% if session['user_type'] == 'admin' %}
+            <form action="/GS_Approve_Students" method="post">
+                <input type="hidden" value="{{ student['s_id'] }}" name="s_id">
+                <td>
+                    <select name="new_major">
+                        {% for major in session['majors'] %}
+                            <option value="{{ major }}" {% if major == student['Major'] %} selected {% endif %}> 
+                                {{ major }}
+                            </option>
+                        {% endfor %} 
+                    </select>                           
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </td>
+            </form>
+            {% else %}
+            <td>{{ student['Major'] }}</td>
+            {% endif %}
+
+            <form action="/GS_Approve_Students" method="post">
+                <input type="hidden" value="{{ student['s_id'] }}" name="s_id">
+                <td>
+                    <select name="newadvisor">
+                        {% for advisor in advisors %}
+                            {% if advisor['user_type'] == 'faculty' %}
+                                <option value="{{ advisor['uid'] }}" {% if advisor['uid'] == student['advisor_id'] %} selected {% endif %}> 
+                                                             
+                                    {{ advisor['fname'] }} {{ advisor['lname'] }}
+                                </option>
+
+                            {% endif %}
+                        {% endfor %}
+                        
+                    </select>                           
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </td>
+            </form>
+            
+
+            <td>{{ student['thesis'] }}</td>
+            
+            <td>
+                <form action="/Transcript{{student['s_id']}}" method="POST">
+                    <input type="hidden" name="student_id" value="{{student['s_id']}}" id="">
+                    <input type="submit" value="View transcript">
+                </form>
+            </td>
+            
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h1>Approve student graduation </h1>
+    <b>All students below this area are cleared for graduation</b>
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>First name</th>
+            <th>middle initial</th>
+            <th>Last Name</th>
+            <th>type</th>
+            <th>Major</th>
+            <th>Thesis</th>
+            <th>Approve graduation</th>
+        </tr>
+        {% for i in pending %}
+        <tr>
+            <td>{{i.s_id}}</td>
+            <td>{{i.fname}}</td>
+            <td>{{i.minit}}</td>
+            <td>{{i.lname}}</td>
+            <td>{{i.user_type}}</td>
+            <td>{{i.Major}}</td>
+            <td>{{i.thesis}}</td>
+            <td>
+            <form action="/GS_Approve_Students" method="POST">
+                <input type="hidden" value="{{i.s_id}}" name="currid">
+                <input class="btn btn-primary" type="submit" value="confirm graduation">
+            </form>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</div>
+
+{% endblock %}

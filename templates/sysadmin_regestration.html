@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <body>
+    <div class = "container">
+
+        <h1> Welcome Sysadmin </h1>
+
+        <h1> Lookup Users and Edit Info: </h1>
+
+        <form action= "/sysadmin_regestration" method="POST">
+            <input type="hidden" value="lookup">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">First name</label>
+                <input class="form-control" type = "text" name = first_name >
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Last name</label>
+                <input class="form-control" type = "text" name = last_name >
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Univsersity ID:</label>
+                <input class="form-control" type = "text" name = uid >
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">User Type: </label>
+                <select name = user_type id = "user_type">
+                    {% for type in session['possible_user_types'] %}
+                        <option value="{{ type }}">{{ type }}</option>
+                    {% endfor %}
+                    <option value = "" selected> any </option>
+                </select>
+            </div>
+            
+            <input class="btn btn-primary" type="submit" name="Form_Type" value="search">
+        </form>
+        <table class="table table-striped">
+            <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>user type</th>
+                <th>edit info</th>
+                <th>Delete</th>
+            </tr>
+            {% for user in session["sysadmin_Lookup_Results"] %}
+            <tr>
+                <form action = "/sysadmin_regestration" method = "POST">
+                    <td>
+                        {{user["uid"]}}
+                    </td>
+                    <td>
+                        {{user['fname']}}
+                    </td>
+                    <td>{{user['lname']}}</td>
+                    <td>{{user['user_type']}}</td>
+                    <td> <a class="btn btn-primary" href="/sysadmin/{{user["uid"]}}"> Edit info</a> </td>
+
+                        <form action = "/sysadmin_regestration" method = "POST">
+                            <td>
+                                {% if user["user_type"] != "sysadmin" %}
+                                    <input class="btn btn-primary" type = "submit" name = "Form_Type" value = "delete user">
+                                    <input type = "hidden" name = "userID" value = "{{user['uid']}}">
+                                {% endif %}
+                            </td>
+                        </form>
+                    
+                </tr>
+            </form>
+            {% endfor %}
+        </table>
+
+        <h1> Add a New User:</h1>
+        <form class="needs-validation" novalidate action action = "/sysadmin_regestration" method = "POST">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">UID:</label>
+                <input class="form-control" type = "text" name = "uid" required>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">First name</label>
+                <input class="form-control" type = "text" name = "fname" required>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Middle Initial:</label>
+                <input class="form-control" type = "text" name = "minit" >
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Last Name:</label>
+                <input class="form-control" type = "text" name = "lname" required>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Address:</label>
+                <input class="form-control" type = "text" name = "address" >
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Birthday:</label>
+                <input class="form-control" type = "text" name = "birthday" value="2000-01-01" min="1900-01-01" max="2022-01-01">
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Phone_no:</label>
+                <input class="form-control" type = "text" name = "phone_no">
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">SSN:</label>
+                <input class="form-control" type = "text" name = "ssn">
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">email:</label>
+                <input class="form-control" type = "email" name = "email">
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">User Type:</label>
+                <select name = user_type id = "user_type">
+                    {% for type in session['possible_user_types'] %}
+                        <option value="{{ type }}">{{ type }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+                
+            <input class="btn btn-primary" type = "submit" name = "Form_Type" value = "add user">
+        </form>
+    </div>
+
+    <div class="container">
+        <a href="/reset" class="btn btn-primary">RESET database WARNING WILL take 12 minutes</a>
+    </div>
+    </body>
+{% endblock %}

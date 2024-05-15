@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5 h-100">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+      <div class="card bg-dark text-white" style="border-radius: 1rem;">
+        <div class="card-body p-5 text-center">
+
+          <div class="mb-md-5 mt-md-4 pb-5">
+
+            <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+            <p class="text-white-50 mb-5">Please enter your id and password!</p>
+            <form class="needs-validation" action="/" method="POST" novalidate>
+                
+                <label class="form-label" for="typeEmailX">UID</label>
+                <input class="form-control" type="number" name="username" required>
+
+                <label class="form-label" for="typeEmailX">Password</label>
+                <input class="form-control" type="password" name="password" required>
+
+                <input class="btn btn-outline-light btn-lg px-5" type="submit" value="log in">
+            </form>
+          </div>
+
+          <div>
+            <p class="mb-0">Don't have an account? 
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+              sign up
+            </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="exampleModal" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <h2 class="fw-bold mb-2 text-uppercase">Sign up</h2>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+              <p class="text-white-50 mb-5">Create account</p>  
+        </div>
+        <div class="container">
+          <div class="row">
+
+            <form class="needs-validation" novalidate action="/newUser" method="POST">
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label for="inputPassword6" class="col-form-label">First name: </label>
+                </div>
+                <div class="col-auto">
+                  <input required type="text" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="fname">
+                </div>
+                <div class="col-auto">
+                  <span class="form-text">
+                    John
+                  </span>
+                </div>
+              </div>
+
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label for="inputPassword6" class="col-form-label">middle initial </label>
+                </div>
+                <div class="col-auto">
+                  <input type="text" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="minit" placeholder="R">
+                </div>
+                <div class="col-auto">
+                  <span class="form-text">
+                    middle initial
+                  </span>
+                </div>
+              </div>
+
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label for="inputPassword6" class="col-form-label">Last name: </label>
+                </div>
+                <div class="col-auto">
+                  <input required type="text" id="inputPassword6" class="form-control" placeholder="doe" aria-describedby="passwordHelpInline" name="lname">
+                </div>
+                <div class="col-auto">
+                  <span class="form-text">
+                    Doe
+                  </span>
+                </div>
+              </div>
+
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label for="inputPassword6" class="col-form-label">password: </label>
+                </div>
+                <div class="col-auto">
+                  <input required type="password" id="inputPassword6" class="form-control" placeholder="" aria-describedby="passwordHelpInline" name="password">
+                </div>
+                <div class="col-auto">
+                  <span class="form-text">
+                    Enter a sequre password
+                  </span>
+                </div>
+              </div>
+              
+
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label for="inputPassword6" class="col-form-label">Address: </label>
+                </div>
+                <div class="col-auto">
+                  <input type="text" id="inputPassword6" class="form-control" placeholder="" aria-describedby="passwordHelpInline" name="address">
+                </div>
+                <div class="col-auto">
+                  <span class="form-text">
+                    Enter your address
+                  </span>
+                </div>
+              </div>
+            
+              
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label for="inputPassword6" class="col-form-label">SSN: </label>
+                </div>
+                <div class="col-auto">
+                  <input type="text" id="inputPassword6" class="form-control" placeholder="12345678" aria-describedby="passwordHelpInline" name="ssn">
+                </div>
+                <div class="col-auto">
+                  <span class="form-text">
+                    Enter your SSN
+                  </span>
+                </div>
+              </div>
+
+
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label for="inputPassword6" class="col-form-label">email: </label>
+                </div>
+                <div class="col-auto">
+                  <input type="email" id="inputPassword6" class="form-control" placeholder="" aria-describedby="passwordHelpInline" name="email">
+                </div>
+                <div class="col-auto">
+                  <span class="form-text">
+                    Enter your email
+                  </span>
+                </div>
+              </div>
+
+
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label for="inputPassword6" class="col-form-label">Phone number: </label>
+                </div>
+                <div class="col-auto">
+                  <input type="number" id="inputPassword6" class="form-control" placeholder="" aria-describedby="passwordHelpInline" name="phone_no">
+                </div>
+                <div class="col-auto">
+                  <span class="form-text">
+                    Enter your phone number
+                  </span>
+                </div>
+              </div>
+
+
+              <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                  <label for="inputPassword6" class="col-form-label">Birthday: </label>
+                </div>
+                <div class="col-auto">
+                  <input type="text" id="inputPassword6" class="form-control" placeholder="" aria-describedby="passwordHelpInline" name="birthday">
+                </div>
+                <div class="col-auto">
+                  <span class="form-text">
+                    Enter your birthday
+                  </span>
+                </div>
+              </div>
+
+                <input type="submit" value="Signup" class="btn btn-primary">
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

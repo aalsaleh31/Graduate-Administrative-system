@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h2>student id : {{user['uid']}}</h2>
+    <form class="needs-validation" novalidate action = "/sysadmin/{{user['uid']}}" method = "POST">
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">First name</label>
+            <input class="form-control" type = "text" name = first_name value = "{{user['fname']}}" required>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Middle Initial</label>
+            <input type = "text" name = middle_initial value = "{{user['minit']}}" >
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Last Name</label>
+            <input type = "text" name = last_name value = "{{user['lname']}}" required>
+
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Address</label>
+            <input type = "text" name = address value = "{{user['address']}}" >
+
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Birthday</label>
+            <input type="date" name="birthday" value="{{user['birthday']}}" min="1900-01-01" max="2022-01-01" >
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Phone Number</label>
+            <input type="text" name="phone_no" value="{{user['phone_no']}}">
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Social Security Number</label>
+            <input type="text" name="ssn" value="{{user['ssn']}}">
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Email</label>
+            <input type="text" name="email" value="{{user['email']}}">
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">User Type </label>
+            <select name = user_type id = "user_type">
+                {% for i in types %}
+                    {% if i == user["user_type"] %}
+                        <option value="{{ i }}" selected>{{ i }}</option>
+                    {% else %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        {% if user["user_type"] == "student_ms" or user["user_type"] == "student_phd" %}
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">View Student Transcript</label>
+            <a class="btn btn-primary" href = "/Transcript{{user['uid']}}"> transcript</a>
+        </div>
+        {% endif %}
+        
+
+        <input class="btn btn-primary" type="submit" value="Confirm edits">
+    </form>
+
+    
+        
+    <a class="btn btn-primary" href="/sysadmin_regestration">Go back</a>
+</div>
+
+{% endblock %}

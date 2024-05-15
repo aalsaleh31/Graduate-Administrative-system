@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    {% if session.id %}
+    <ul>
+        <h1>my ID = {{session.id}}</h1>
+    </ul>
+    {% endif %}
+
+    <div class="row">
+            {% if session.user_type == "student_ms" or session.user_type == "student_phd" %}
+            <div class="col">
+                <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                    <img src="/static/logout.png" class="card-img-top" alt="View Students" />
+                    <div class="card-body">
+                        <h5 class="card-title">Advising Hold </h5>
+                        <p class="card-text">Submit Advising form</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/advising_hold" class="btn btn-primary btn-lg">submit</a>
+                    </div>
+                </div>
+            </div>
+                    {%if session.user_type == "student_phd" %}
+                    <div class="col">
+                        <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                            <img src="/static/thesis.png" class="card-img-top" alt="View Students" />
+                            <div class="card-body">
+                                <h5 class="card-title">Thesis </h5>
+                                <p class="card-text">Write your thesis in this area</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="/Thesis" class="btn btn-primary btn-lg">go</a>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    {% endif %}
+                    <div class="col">
+                        <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                            <img src="/static/checkreq.png" class="card-img-top" alt="View Students" />
+                            <div class="card-body">
+                                <h5 class="card-title">Graduation Requirements </h5>
+                                <p class="card-text">Check if you meet graduation requirement or apply for graduation</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="/Graduation_Requirements" class="btn btn-primary btn-lg">go</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card h-100 product" style="width: 21rem;height: 20rem;">
+                            <img src="/static/add.png" class="card-img-top" alt="View Students" />
+                            <div class="card-body">
+                                <h5 class="card-title">Form 1</h5>
+                                <p class="card-text">Submit your form 1 so you can graduate</p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="/form1" class="btn btn-primary btn-lg">go</a>
+                            </div>
+                        </div>
+                    </div>
+
+            {% endif %}
+    </div>
+</div>
+
+{% endblock %}

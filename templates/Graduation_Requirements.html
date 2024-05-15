@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if session.user_type == 'student_ms' %}
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Your Current Track for Graduation</a>
+    </nav>
+    <h1>{{available}}</h1>
+    <h3>The requirements</h3>
+    <ul class="list-group">
+
+
+        <li class="list-group-item">Core classes CSCI 6212, CSCI 6221, and CSCI 6461: {{req['core']}} out of 3 
+            {% if req['core'] == 3 %}
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            {% elif req['core'] != 3 %}
+            <span class="glyphicon glyphicon-remove-circle"></span>
+            {% endif %}
+        </li> 
+        
+        <li class="list-group-item">GPA must be more than 3 GPA = {{req['gpa']}}
+            {% if req['gpa'] >= 3 %}
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            {% elif req['gpa'] < 3 %}
+            <span class="glyphicon glyphicon-remove-circle"></span>
+            {% endif %}
+        </li>
+        
+        <li class="list-group-item">Credit should be at least 30  credit= {{req['tc']}}
+            {% if req['tc'] >= 30 %}
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            {% elif req['tc'] < 30 %}
+            <span class="glyphicon glyphicon-remove-circle"></span>
+            {% endif %}
+        </li>
+        <li class="list-group-item">not more than 2 grades less than a b, grades less than b = {{req['counter']}}
+            {% if req['counter'] <= 2 %}
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            {% elif req['counter'] > 2 %}
+            <span class="glyphicon glyphicon-remove-circle"></span>
+            {% endif %}
+        </li>
+
+        <li class="list-group-item">Fill out form 1: {{req['form1']}}
+            {% if req['form1'] == True %}
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            {% elif req['form1'] == False %}
+            <span class="glyphicon glyphicon-remove-circle"></span>
+            {% endif %}
+        </li>
+
+    </ul>
+    {% if n == 1 %}
+    <h2>Congradulations! You are eligible to graduate</h2>
+    <form action="/Graduation_Requirements" method="POST">
+        <input class="btn btn-primary" type="submit" value="graduate">
+    </form>
+    {% elif n == 0 %}
+    <h2>You are currently not eligible to Graduate</h2>
+    {% endif %}
+
+</div>
+
+{% endif %}
+
+
+
+{% if session.user_type == 'student_phd' %}
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Your Current Track for Graduation</a>
+    </nav>
+    <h1>{{available}}</h1>
+    <h3>The requirements</h3>
+    <ul class="list-group">
+
+        <li class="list-group-item">GPA must be at least than 3.5 GPA = {{req['gpa']}}
+            {% if req['gpa'] >= 3.5 %}
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            {% elif req['gpa'] < 3.5 %}
+            <span class="glyphicon glyphicon-remove-circle"></span>
+            {% endif %}
+        </li>
+        <li class="list-group-item">Credit should be at least 36  credit= {{req['tc']}}
+            {% if req['tc'] >= 36 %}
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            {% elif req['tc'] < 36 %}
+            <span class="glyphicon glyphicon-remove-circle"></span>
+            {% endif %}
+        </li>
+        <li class="list-group-item">CS credit should be at least 30, CS credit= {{req['cscredit']}}
+            {% if req['cscredit'] >= 30 %}
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            {% elif req['cscredit'] < 30 %}
+            <span class="glyphicon glyphicon-remove-circle"></span>
+            {% endif %}
+        </li>
+        <li class="list-group-item">not more than 1 grades less than a b, grades less than b = {{req['counter']}}
+            {% if req['counter'] <= 1 %}
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            {% elif req['counter'] > 1 %}
+            <span class="glyphicon glyphicon-remove-circle"></span>
+            {% endif %}
+        </li>
+        <li class="list-group-item">Thesis approved.  approval: {{req['thesis']}}
+            {% if req['thesis'] == "approved" %}
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            {% elif req['thesis'] != "approved" %}
+            <span class="glyphicon glyphicon-remove-circle"></span>
+            {% endif %}
+        </li>
+        <li class="list-group-item">Fill out form 1: {{req['form1']}}
+            {% if req['form1'] == True %}
+            <span class="glyphicon glyphicon-ok-sign"></span>
+            {% elif req['form1'] == False %}
+            <span class="glyphicon glyphicon-remove-circle"></span>
+            {% endif %}
+        </li>
+
+    </ul>
+    {% if n == 1 %}
+    <h2>you can graduate</h2>
+    <form action="/Graduation_Requirements" method="POST">
+        <input class="btn btn-primary" type="submit" value="graduate">
+    </form>
+    {% elif n == 0 %}
+    <h2>You are currently not eligible to Graduate</h2>
+    {% endif %}
+
+<a href="/Student_Advising" class="btn btn-primary">Go back to previous page</a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

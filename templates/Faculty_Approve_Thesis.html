@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h1>My students</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>First name</th>
+            <th>Last Name</th>
+            <th>View transcript</th>
+            <th>View Form1</th>
+            <th>Advising holds</th>
+        </tr>
+
+        {% for i in rows %}
+            <tr>
+                <td>{{i['fname']}}</td>
+                <td>{{i['lname']}}</td>
+                <td>
+                    <form action="/Transcript{{i['s_id']}}" method="POST">
+                        <input type="hidden" name="student_id" value="{{i['s_id']}}" id="">
+                        <input  class="btn btn-primary btn-sm" type="submit" value="View transcript">
+                    </form>
+                </td>
+                <td>
+                    <form action="/view_form1" method="POST">
+                        <input type="hidden" name="student_id" value="{{i['s_id']}}" id="">
+                        <input  class="btn btn-primary btn-sm" type="submit" value="View form 1">
+                    </form>
+                </td>
+                <td>
+                    <form action="/approve_advising_hold" method="POST">
+                        <input type="hidden" name="sx_id" value="{{i['s_id']}}" id="">
+                        <input  class="btn btn-primary btn-sm" type="submit" value="View advising form">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h1>Pending thesis submissions</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Thesis</th>
+            <th>Approve or decline</th>
+        </tr>
+        {% for i in pending %}
+        <tr>
+            <td>{{i['fname']}} {{i['lname']}} </td>
+            
+            <td> 
+                <div class="form-group green-border-focus">
+                    <textarea readonly class="form-control" name="" id="" value="{{i['thesis_text']}}" rows="5">{{i['thesis_text']}}</textarea> </td>
+                </div>
+            <td><form action="/Faculty_Approve_Thesis" method="POST">
+                <input type="hidden" name="student_id" value="{{i['s_id']}}">
+                <input required type="radio" name="check" value="approved"> <label for="">Accept</label> <br>
+                <input required type="radio" name="check" value="rejected"> <label for="">reject</label> <br>
+                <input type="submit">
+            </form></td>
+        </tr>
+    
+        {% endfor %}
+    </table>
+
+    <a class="btn btn-primary" href="/">Go home</a>
+</div>
+
+
+
+{% endblock %}
